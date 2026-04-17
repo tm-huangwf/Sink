@@ -81,7 +81,18 @@ watch(color, (newColor) => {
 
 function downloadQRCode() {
   const slug = props.data.split('/').pop()
-  qrCode.download({
+  const downloadSize = 1024
+  const downloadQr = new QRCodeStyling({
+    ...options,
+    width: downloadSize,
+    height: downloadSize,
+    image: '',
+    imageOptions: { ...options.imageOptions, imageSize: 0 },
+    dotsOptions: { type: 'dots' as const, color: color.value },
+    cornersSquareOptions: { type: 'extra-rounded' as const, color: color.value },
+    cornersDotOptions: { type: 'dot' as const, color: color.value },
+  })
+  downloadQr.download({
     extension: 'png',
     name: `qr_${slug}`,
   })
